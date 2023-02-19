@@ -22,8 +22,24 @@ function readAndAppend(content, file){
     })
 }
 
+function deleteNote(id, file){
+    fs.readFile(file, 'utf-8', (err, data) =>{
+        if (err){
+            console.error(err);
+        }
+        else{
+            let JSONobj = JSON.parse(data)
+            let idArray = JSONobj.map(item => item.id);
+            let idIndex = idArray.indexOf(id);
+            JSONobj.splice(idIndex,1)
+            console.info(JSONobj)
+            writeToFile(file, JSONobj);
+        }
+    })
+}
 
 module.exports = {
     readFromFile,
-    readAndAppend
+    readAndAppend,
+    deleteNote
 }
